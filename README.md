@@ -1,6 +1,4 @@
 psychic-dangerzone
 ==================
 
-This does some stuff, yo.
-
-And now it does it well!
+Not to be confused with the twilight zone.
