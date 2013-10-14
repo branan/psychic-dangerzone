@@ -1,7 +1,6 @@
 psychic-dangerzone
 ==================
 
-
-This does some stuff, yo
+This does some stuff, yo.
 
 And now it does it well!
