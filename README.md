@@ -1,6 +1,6 @@
 psychic-dangerzone
 ==================
 
-a dangerous project
+A dangerous project.
 
-This does some stuff, yo
+This does some stuff, yo.
