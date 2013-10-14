@@ -1,6 +1,4 @@
 psychic-dangerzone
 ==================
 
-A dangerous project.
-
-This does some stuff, yo.
+Not to be confused with the twilight zone.
