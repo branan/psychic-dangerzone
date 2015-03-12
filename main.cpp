@@ -1,12 +1,27 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 #include <iostream>
+#include <cmath>
+#include <algorithm>
 
 sf::Vector2f clamp(sf::Vector2f min, sf::Vector2f max, float width, float height, sf::Vector2f val) {
     float x = std::max(min.x, std::min(max.x - width, val.x));
     float y = std::max(min.y, std::min(max.y - width, val.y));
 
     return sf::Vector2f(x, y);
+}
+
+float distance(sf::Vector2f lhs, sf::Vector2f rhs) {
+  float x_delta = lhs.x - rhs.x;
+  float y_delta = lhs.y - rhs.y;
+  return sqrt(x_delta * x_delta + y_delta * y_delta);
+}
+
+bool colliding(sf::Vector2f a_pos, float a_size, sf::Vector2f b_pos, float b_size) {
+  sf::Vector2f a_center(a_pos.x + a_size, a_pos.y + a_size);
+  sf::Vector2f b_center(b_pos.x + b_size, b_pos.y + b_size);
+
+  return distance(a_center, b_center) < (a_size + b_size);
 }
 
 int main() {
@@ -24,7 +39,10 @@ int main() {
     std::vector<sf::CircleShape> enemies(4);
     for (int i = 0; i < 4; i++) {
       sf::CircleShape enemy(20, 4);
-      enemy.setPosition(rand() % 790, rand() % 590);
+      float x = rand() % 790;
+      float y = rand() % 590;
+      std::cout << "creating: " << x << " " << y << std::endl;
+      enemy.setPosition(x, y);
       enemies.push_back(enemy);
     }
 
@@ -60,10 +78,17 @@ int main() {
 
         window.draw(player);
 
-        std::for_each(enemies.begin(), enemies.end(),  [&](sf::CircleShape shape) -> void { window.draw(shape); });
+        auto remaining = std::remove_if(enemies.begin(), enemies.end(), [& player](sf::CircleShape enemy) -> bool {
+            return colliding(enemy.getPosition(), enemy.getRadius(), player.getPosition(), player.getRadius());
+        });
+
+        enemies.erase(remaining, enemies.end());
+
+        std::for_each(enemies.begin(), enemies.end(),  [&](sf::CircleShape enemy) -> void {
+            window.draw(enemy);
+        });
 
         window.display();
-        std::cout << world_clock.getElapsedTime().asSeconds() - last_frame_time << std::endl;
     }
 
     return 0;
