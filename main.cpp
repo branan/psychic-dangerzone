@@ -10,6 +10,7 @@ sf::Vector2f clamp(sf::Vector2f min, sf::Vector2f max, float width, float height
 }
 
 int main() {
+    srand(time(NULL));
     sf::RenderWindow window(sf::VideoMode(800,600),  "Psychic Dangerzone");
     window.setVerticalSyncEnabled(true);
 
@@ -19,6 +20,13 @@ int main() {
     sf::Clock world_clock;
 
     sf::CircleShape player(50);
+
+    std::vector<sf::CircleShape> enemies(4);
+    for (int i = 0; i < 4; i++) {
+      sf::CircleShape enemy(20, 4);
+      enemy.setPosition(rand() % 790, rand() % 590);
+      enemies.push_back(enemy);
+    }
 
     float last_frame_time;
     while(window.isOpen()) {
@@ -51,6 +59,8 @@ int main() {
         window.clear(sf::Color::Black);
 
         window.draw(player);
+
+        std::for_each(enemies.begin(), enemies.end(),  [&](sf::CircleShape shape) -> void { window.draw(shape); });
 
         window.display();
         std::cout << world_clock.getElapsedTime().asSeconds() - last_frame_time << std::endl;
