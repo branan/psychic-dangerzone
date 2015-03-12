@@ -16,5 +16,5 @@ find_package(Threads)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 include_directories(${SFML_INCLUDE_DIR})
 
-add_executable(psychic_dangerzone main.cpp)
+add_executable(psychic_dangerzone main.cpp universe.cpp)
 target_link_libraries(psychic_dangerzone ${SFML_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

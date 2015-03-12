@@ -2,9 +2,13 @@
 #include <SFML/System/Clock.hpp>
 #include <iostream>
 
+#include "universe.hpp"
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(800,600),  "Psychic Dangerzone");
     window.setVerticalSyncEnabled(true);
+
+    auto world = generateWorld(4);
 
     sf::Clock world_clock;
 
