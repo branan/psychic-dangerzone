@@ -35,14 +35,15 @@ int main() {
     sf::Clock world_clock;
 
     sf::CircleShape player(50);
+    player.setFillColor(sf::Color::White);
 
     std::vector<sf::CircleShape> enemies(4);
     for (int i = 0; i < 4; i++) {
       sf::CircleShape enemy(20, 4);
       float x = rand() % 790;
       float y = rand() % 590;
-      std::cout << "creating: " << x << " " << y << std::endl;
       enemy.setPosition(x, y);
+      enemy.setFillColor(sf::Color::Green);
       enemies.push_back(enemy);
     }
 
@@ -74,7 +75,7 @@ int main() {
         player.move(velocity);
         player.setPosition(clamp(min_bounds, max_bounds, player.getRadius() * 2, player.getRadius() * 2, player.getPosition()));
 
-        window.clear(sf::Color::Black);
+        window.clear(sf::Color(0x55, 0x00, 0x55));
 
         window.draw(player);
 
