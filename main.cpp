@@ -2,9 +2,31 @@
 #include <SFML/System/Clock.hpp>
 #include <iostream>
 
+sf::Vector2f clamp(sf::Vector2f min, sf::Vector2f max, float width, float height, sf::Vector2f val) {
+    float x, y;
+    if (val.x < min.x) {
+        x = min.x;
+    } else if (val.x > max.x - width) {
+        x = max.x - width;
+    } else {
+        x = val.x;
+    }
+    if (val.y < min.y) {
+        y = min.y;
+    } else if (val.y > max.y - height) {
+        y = max.y - height;
+    } else {
+        y = val.y;
+    }
+    return sf::Vector2f(x, y);
+}
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(800,600),  "Psychic Dangerzone");
     window.setVerticalSyncEnabled(true);
+
+    sf::Vector2f min_bounds(0, 0);
+    sf::Vector2f max_bounds(800, 600);
 
     sf::Clock world_clock;
 
@@ -36,7 +58,7 @@ int main() {
         }
 
         player.move(velocity);
-        //player.move(velocity.x, velocity.y);
+        player.setPosition(clamp(min_bounds, max_bounds, player.getRadius() * 2, player.getRadius() * 2, player.getPosition()));
 
         window.clear(sf::Color::Black);
 
