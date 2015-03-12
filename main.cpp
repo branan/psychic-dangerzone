@@ -3,21 +3,9 @@
 #include <iostream>
 
 sf::Vector2f clamp(sf::Vector2f min, sf::Vector2f max, float width, float height, sf::Vector2f val) {
-    float x, y;
-    if (val.x < min.x) {
-        x = min.x;
-    } else if (val.x > max.x - width) {
-        x = max.x - width;
-    } else {
-        x = val.x;
-    }
-    if (val.y < min.y) {
-        y = min.y;
-    } else if (val.y > max.y - height) {
-        y = max.y - height;
-    } else {
-        y = val.y;
-    }
+    float x = std::max(min.x, std::min(max.x - width, val.x));
+    float y = std::max(min.y, std::min(max.y - width, val.y));
+
     return sf::Vector2f(x, y);
 }
 
