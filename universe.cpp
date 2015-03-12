@@ -1,8 +1,12 @@
 #include "universe.hpp"
 #include <random>
 #include <set>
+#include <iostream>
 
 static bool rooms_connected(Room* r1, Room* r2, std::set<Room*> checked = std::set<Room*>()) {
+    if(r1 == r2)
+        return true;
+
     checked.insert(r1);
     for(const auto& door: r1->doors) {
         if(!door) {
@@ -35,8 +39,8 @@ static void generate_edge(const std::vector<RoomPtr>& rooms) {
         if (rooms[source]->doors[door]) continue;
 
         auto the_door = DoorPtr(new Door);
-        the_door->source = Room::Corner(exit);
-        the_door->dest = Room::Corner(door);
+        the_door->source = Room::Corner(door);
+        the_door->dest = Room::Corner(exit);
         the_door->target = rooms[dest].get();
         rooms[source]->doors[door] = std::move(the_door);
         return;
